@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/listen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="19dp"
+        android:text="Listen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="119dp"
+        android:layout_below="@+id/listen"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/listDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listview"
+        android:layout_centerHorizontal="true"
+        android:text="List Devices" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/listDevices"
+        android:layout_alignBottom="@+id/listDevices"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp"
+        android:text="Status"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/install"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="570dp"
+        android:layout_marginEnd="255dp"
+        android:layout_marginBottom="118dp"
+        android:text="INSTALL APP"
+        app:backgroundTint="#4CAF50" />
+
+    <Button
+        android:id="@+id/start_routine"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="197dp"
+        android:layout_marginEnd="294dp"
+        android:layout_marginBottom="480dp"
+        android:text="Start Routine"
+        app:backgroundTint="#009688" />
+
+    <Button
+        android:id="@+id/getRoutine"
+        android:layout_width="106dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="271dp"
+        android:layout_marginEnd="248dp"
+        android:layout_marginBottom="401dp"
+        android:text="GET Routine"
+        app:backgroundTint="#009688" />
+
+    <Button
+        android:id="@+id/getApps"
+        android:layout_width="wrap_content"
+        android:layout_height="58dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="207dp"
+        android:layout_marginTop="273dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="399dp"
+        android:text="GET APPS"
+        app:backgroundTint="#009688" />
+
+    <Button
+        android:id="@+id/switchRoutine"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="291dp"
+        android:layout_marginTop="198dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="477dp"
+        android:text="SWITCH Routine"
+        app:backgroundTint="#009688" />
+
+    <Button
+        android:id="@+id/stopRoutine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="297dp"
+        android:layout_marginTop="663dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="STOP "
+        app:backgroundTint="#F44336" />
+
+    <Button
+        android:id="@+id/deleteApp"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="568dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="115dp"
+        android:text="Delete app"
+        app:backgroundTint="#FF9800" />
+
+    <TextView
+        android:id="@+id/msgBox"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="651dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="7dp"
+        android:text="TextView" />
+
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="362dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="187dp" />
+
+</RelativeLayout>
