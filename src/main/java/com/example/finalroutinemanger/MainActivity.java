@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String APP_NAME = "BTChat";
     private static final UUID MY_UUID=UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    byte[] delimiter= {0x1E,0x1E,0x1E};
+    byte[] delimiter= {0x1E,0x1E,0x1E};//record separator
     byte[] readBuff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 sendReceive.write(array);
                 sendReceive.write(hex2);
+
             }
         });
         //get app button click
@@ -213,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 hex2[0] = 0x00;
                 hex2[1] = 0x03;
                 int command_name = hex2.length;
-                String routine_name = "FIRE DEMO";
+                String routine_name = "fireDemo";
                 int routine_name_len = routine_name.length();
                 int totalBytes= command_name + routine_name_len;
                 byte[] array = new byte[4];
@@ -424,51 +426,50 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case STATE_MESSAGE_RECEIVED:
                     readBuff= (byte[]) msg.obj;
-                   // String tempMsg = new String(readBuff, 0, msg.arg1);
-                    getRoutine.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getRoutineReceive();
+                    List<byte[]> parsed = SplitBytesByDelimiter(delimiter,readBuff);
+                    String get_routine_command = "GET_ROUTINES";
+                    String get_app_command = "GET_APPS";
+                    byte[] cmdEncoding = parsed.get(0);
+                    String cmd = new String(cmdEncoding);
+                    //msg_box.setText(cmd);
+                    if(cmd.equals(get_routine_command)){
+                        msg_box.setText("GET ROUTINE");
+                        List<byte[]> encodedRoutines = parsed.subList(1, parsed.size());
+                        getRoutineReceive(encodedRoutines);
+                    }else if (cmd.equals(get_app_command)){
+                        //msg_box.setText("GET");
+                        List<byte[]> encodedRoutines = parsed.subList(1, parsed.size());
+                        String[] apps = new String[encodedRoutines.size()-1];
+                        //msg_box.setText(String.valueOf(encodedRoutines.size()+1));
+                        for (int i = 0; i<encodedRoutines.size()-1; i++) {
+                            apps[i] = new String(encodedRoutines.get(i+i));
                         }
-                    });
-                    
+                        msg_box.setText(apps[0]);
+                        ArrayAdapter<String> arrayMsg=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,apps);
+                        listView2.setAdapter(arrayMsg);
 
-                    //getRoutineReceive function before state are below with readbuff local variable
-                    //I made the readbuff global and try accesing that in other function like getRoutineReceive
-//                    List<byte[]> parsed = SplitBytesByDelimiter(delimiter,readBuff);
-//                    String[] result = new String[parsed.size()];
-//                    for (int i = 0; i<parsed.size();i++){
-//                        result[i] = new String(parsed.get(i));
-//                    }
-//                    msg_box.setText(result[0]);
-////                        for (int i=0; i<part.length; i++){
-////                           (char)part[i];
-////                            // System.out.print(' ');
-////                        }
-//
-//                   ArrayAdapter<String> arrayMsg=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,result);
-//                   listView2.setAdapter(arrayMsg);
+                       // Bitmap bitmap=BitmapFactory.decodeByteArray(encodedRoutines.get(1),0,msg.arg1);
+
+                        //imageView.setImageBitmap(bitmap);//list it in imageview
+
+                    }else{
+                        //msg_box.setText("NOTHING");
+                    }
                     break;
             }
             return true;
         }
     });
 
-    private void getRoutineReceive() {
-        List<byte[]> parsed = SplitBytesByDelimiter(delimiter,readBuff);
-        String[] result = new String[parsed.size()];
-        for (int i = 0; i<parsed.size();i++){
-            result[i] = new String(parsed.get(i));
+    private void getRoutineReceive(List<byte[]> encodedRoutines){
+        String[] routines = new String[encodedRoutines.size()];
+        for (int i = 0; i<encodedRoutines.size(); i++) {
+            routines[i] = new String(encodedRoutines.get(i));
         }
-        msg_box.setText(result[0]);
-//                        for (int i=0; i<part.length; i++){
-//                           (char)part[i];
-//                            // System.out.print(' ');
-//                        }
-
-        ArrayAdapter<String> arrayMsg=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,result);
+        ArrayAdapter<String> arrayMsg=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,routines);
         listView2.setAdapter(arrayMsg);
     }
+
 
     public static boolean isMatch(byte[] pattern, byte[] input, int pos) {
         for(int i=0; i< pattern.length; i++) {
@@ -492,31 +493,6 @@ public class MainActivity extends AppCompatActivity {
         l.add(Arrays.copyOfRange(input, blockStart, input.length ));
         return l;
     }
-
-//    public static List<byte[]> receivedData(byte[] array,byte[] delimiter) {
-//            List<byte[]> byteArrays = new LinkedList<>();
-//            if (delimiter.length == 0) {
-//                return byteArrays;
-//            }
-//            int begin = 0;
-//
-//            outer:
-//            for (int i = 0; i < array.length - delimiter.length + 1; i++) {
-//                for (int j = 0; j < delimiter.length; j++) {
-//                    if (array[i + j] != delimiter[j]) {
-//                        continue outer;
-//                    }
-//                }
-//                byteArrays.add(Arrays.copyOfRange(array, begin, i));
-//                begin = i + delimiter.length;
-//            }
-//            byteArrays.add(Arrays.copyOfRange(array, begin, array.length));
-//            return byteArrays;
-//        }
-
-
-
-
 
     private void findViewByIdes() {
         install = (Button)findViewById(R.id.install);
